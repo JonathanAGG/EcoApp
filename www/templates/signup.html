@@ -8,39 +8,40 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin()">
+    <form ng-submit="verifyEmailSignup(signupData)">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Nombre</span>
-          <input type="text" ng-model="loginData.nombre">
+          <input type="text" ng-model="signupData.name">
         </label>
         <label class="item item-input">
           <span class="input-label">Apellidos</span>
-          <input type="text" ng-model="loginData.apellidos">
+          <input type="text" ng-model="signupData.lastname">
         </label>
         <label class="item item-input">
           <span class="input-label">Número de Cédula</span>
-          <input type="number" ng-model="loginData.cedula">
+          <input type="number" ng-model="signupData.ID">
         </label>                
         <label class="item item-input">
-          <span class="input-label">Correo</span>
-          <input type="email" ng-model="loginData.correo">
+          <span class="input-label">Correo Electrónico</span>
+          <input type="email" ng-model="signupData.email">
         </label>
         <label class="item item-input">
           <span class="input-label">Teléfono</span>
-          <input type="number" ng-model="loginData.telefono">
+          <input type="number" ng-model="signupData.phone">
         </label>                
         
         <label class="item item-input">
           <span class="input-label">Contraseña</span>
-          <input type="password" ng-model="loginData.password">
+          <input type="password" ng-model="signupData.password">
         </label>
         <label class="item item-input">
           <span class="input-label">Repetir contraseña</span>
-          <input type="password" ng-model="loginData.password2">
+          <input type="password" ng-model="signupData.password2">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Registrarse</button>
+          <input class="button button-block button-positive" type="submit" value="Registrarse">           
+          
         </label>
       </div>
     </form>

@@ -1,4 +1,4 @@
-<ion-view view-title="Login">
+<ion-view view-title="Login" ng-init="help=false">
   <ion-header-bar>
     <h1 class="title">Autenticación de Socio</h1>
     <div class="buttons">
@@ -6,23 +6,26 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="verifyEmailLogin(loginData)">
+    <form ng-submit="doLogin(loginData)">
       <div class="list">
-        <label class="item item-input">
+        
+        <label class="item item-input" ng-hide="help">
+          <span class="input-label">Correo Electrónico</span>
+          <input type="email" ng-model="loginData.email">
+        </label>        
+        <label class="item item-input" ng-show="help">
           <span class="input-label">Número de Cédula</span>
-          <input type="number" ng-model="loginData.cedula">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Correo Eletcrónico</span>
-          <input type="email" ng-model="loginData.username">
-        </label>
+          <input type="number" ng-model="loginData.ID">
+        </label>        
         <label class="item item-input">
           <span class="input-label">Contraseña</span>
           <input type="password" ng-model="loginData.password">
         </label>
+        <a ng-click="help=!help">No se acuerda de su correo electrónico?</a>
+          
         <label class="item">
           <input class="button button-block button-positive" type="submit" value="Entrar">           
-        </label>        
+        </label>                     
       </div>
     </form>
     <label class="item">

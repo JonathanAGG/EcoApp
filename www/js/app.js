@@ -43,9 +43,10 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     
     /**************************** REFERENSES TO THE DATABASE IN FIREBASE***************************/
     $rootScope.databaseRef = firebase.database().ref();    
-    $rootScope.usuariosRef = firebase.database().ref('/usuarios');     
-    $rootScope.parqueosRef = firebase.database().ref('/parqueos'); 
-    $rootScope.fichasRef = firebase.database().ref('/facturasParqueo'); 
+    $rootScope.usersRef = firebase.database().ref('/users');     
+    $rootScope.parkinglotsRef = firebase.database().ref('/parkinglots'); 
+    $rootScope.parkingBillRef = firebase.database().ref('/parkingBill'); 
+
     $rootScope.fichasRef = firebase.database().ref('/convoFichas'); 
     $rootScope.fichasRef = firebase.database().ref('/listaSocios  '); 
    
@@ -87,57 +88,17 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
       }); 
       // CREA EL EVENT HANDLER CUANDO CAMBIA EL ESTADO DE LA SESION
       
-      firebase.auth().onAuthStateChanged(function(user) {
-                
+      firebase.auth().onAuthStateChanged(function(user) {                
         if (user) {// User is signed in.        
           $rootScope.currentUser= firebase.auth().currentUser;                           
           console.log("UID:",firebase.auth().currentUser.uid);
-          firebase.database().ref('SkyAdventures/intros/'+user.uid).on("value",function(snapshot) {  // el valor de la intro del usuario
-            var snap = snapshot.val();  
-            $rootScope.intro=snap;
-            //console.log("Intro:",snap);
-            if(snap==null || snap==false){
-              //$rootScope.goIntro();   
-              $rootScope.goDasshboard();
-              $timeout(function() {
-                               
-                }, 2000);                             
-            }else{$rootScope.goDasshboard();}
-          });
-
-          //console.log($rootScope.telefonoFired);
-          firebase.database().ref('SkyAdventures/uTelefonos/'+user.uid).on("value",function(snapshot) {            
-            var telefono=snapshot.val();//console.log(telefono);            
-            var timeout;
-            if ((telefono==null)||(telefono=='')){              
-              $rootScope.currentUser.telefono='';
-              //console.log(telefono);
-              if ($rootScope.intro){timeout=10000;}
-              else{timeout=10000;/*timeout=60000;*/}
-              if($rootScope.telefonoFired==false){
-                $rootScope.telefonoFired=true;
-                $timeout(function() {
-                  $rootScope.goCuenta(true);
-                  $rootScope.showAlert('Agrega tu número de teléfono, para notificarte cuando tus premios esten listos!');
-                }, timeout);                              
-              }
-            }else{$rootScope.currentUser.telefono=telefono;}
-          });
-
-
-          $rootScope.loadUserInfo(user.uid);
-
-          
+          $state.go('app.dashboard');          
+                   
           $rootScope.myConnectionsRef = firebase.database().ref('/ConnectedUsers/'+$rootScope.currentUser.uid+'/connections');
           $rootScope.lastOnlineRef = firebase.database().ref('/ConnectedUsers/'+$rootScope.currentUser.uid+'/connections');// stores the timestamp of my last disconnect (the last time I was seen online)
           $rootScope.userDataRef = firebase.database().ref('/ConnectedUsers/'+$rootScope.currentUser.uid+'/data');
           $rootScope.userDataRef.set({"email":$rootScope.currentUser.email,"displayName":$rootScope.currentUser.displayName});                           
-          
-          firebase.database().ref('SkyAdventures/canjees/'+user.uid).on("value",function(snapshot) {  // carga los canjes del usuario
-            var snap = snapshot.val();  
-            if(snap!=null){$rootScope.currentCanjees = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentCanjees=[];}$state.reload();                       
-          });
-
+                    
         } else {    // No user is signed in.                    
           console.log("No user is signed in.");      
           $state.go("login");
@@ -150,10 +111,10 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
       
     
 
-    $rootScope.parqueosRef.on("value",function(snapshot) {  // LIST OF ALL PRODUCTS OF THE COMPANY
-      var snap = snapshot.val();  
-      if(snap!=null){$rootScope.currentProductos = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentProductos=[];}$state.reload();           
-    });
+  // $rootScope.parqueosRef.on("value",function(snapshot) {  // LIST OF ALL PRODUCTS OF THE COMPANY
+  //   var snap = snapshot.val();  
+  //   if(snap!=null){$rootScope.currentProductos = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentProductos=[];}$state.reload();           
+  // });
 
 
     
@@ -164,7 +125,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
 
 
 
-
+  $rootScope.logOut = function(){      
+    $ionicLoading.show();
+    firebase.auth().signOut().then(function() {        
+        $ionicLoading.hide();
+        $state.go('login');
+    }, function(error) {        
+        $ionicLoading.hide();
+        $rootScope.showAlert("Error");
+    });    
+  };
 
 
 
@@ -214,6 +184,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
       'menuContent': {
         templateUrl: 'templates/dashboard.html',
         controller: 'DashboardCtrl'
+      }
+    }
+  })
+
+  .state('app.parkinglots', {
+    url: '/parkinglots',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/parkinglots.html',
+        controller: 'ParkinglotsCtrl'
       }
     }
   })
