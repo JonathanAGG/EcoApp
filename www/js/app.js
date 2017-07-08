@@ -193,7 +193,27 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     views: {
       'menuContent': {
         templateUrl: 'templates/parkinglots.html',
-        controller: 'ParkinglotsCtrl'
+        controller: 'AppCtrl'
+      }
+    }
+  })
+
+  .state('app.tickets', {
+    url: '/tickets',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tickets.html',
+        controller: 'AppCtrl'
+      }
+    }
+  })
+
+  .state('app.users', {
+    url: '/users',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/users.html',
+        controller: 'AppCtrl'
       }
     }
   })
