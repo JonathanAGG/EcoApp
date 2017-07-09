@@ -1,4 +1,6 @@
 {
   "name": "eco_app",
-  "app_id": ""
+  "app_id": "",
+  "type": "ionic1",
+  "watchPatterns": []
 }
