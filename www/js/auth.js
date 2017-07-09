@@ -32,21 +32,20 @@ app
 
   
   $scope.doLogin =function(loginData){
-     if(loginData.ID==""||loginData.ID==" "||loginData.ID==null){$rootScope.showAlert("Verifique el Número de Cédula");}
-     else{
-      if ($scope.help){ //Buscar correo por numero de cedula
+    if ($scope.help){ //Buscar correo por numero de cedula
+      if(loginData.ID==""||loginData.ID==" "||loginData.ID==null){$rootScope.showAlert("Verifique el Número de Cédula");}
+      else{      
         $rootScope.usersRef.on("value",function(snapshot) {  // LIST OF ALL PRODUCTS OF THE COMPANY
           var snap = snapshot.val();  
           console.log(snapshot);
           if(snap!=null){$rootScope.currentUsers = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentUsers=[];}$state.reload();                     
           //var filter = $filter('filter')($rootScope.currentUsers,{"ID":loginData.ID});
           //console.log(filter);
-
-        });
-
-      }      
-     }
-
+        });     
+      }
+    }else{
+      $scope.verifyEmailLogin(loginData);
+    }
   };
 
 
@@ -54,7 +53,7 @@ app
   //************FUNCIONES PARA LOGIN CON EMAIL**************//
  
   $scope.verifyEmailLogin = function(loginData){
-    console.log(loginData);
+    //console.log(loginData);
     try{
       if(loginData.email==""||loginData.email==" "||loginData.email==null){$rootScope.showAlert("Verifique el Email");}
       else if(loginData.password==""||loginData.password==" "||loginData.password==null){$rootScope.showAlert("Verifique la Contraseña");}
@@ -139,6 +138,7 @@ app
 
   $scope.createUserDatabase = function (uid,signupData){        
     //console.log(signupData);
+    var userRef= $rootScope.usersRef.child(uid);
     var firebaseData={      
       "ID":signupData.ID,
       "name":signupData.name,
@@ -146,13 +146,13 @@ app
       "phone":signupData.phone,
       "email":signupData.email,
       "role":"USER",
-      "uid":uid
+      //"uid":uid
     };
     //console.log(firebaseData);
       
     //signupData.photoURL='img/No_Profile.svg';
     
-    $rootScope.usersRef.push(firebaseData)
+    userRef.set(firebaseData)
       .then(function(x){    
         })
       .catch(function(error) {

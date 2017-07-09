@@ -1,9 +1,24 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Parqueo">
   <ion-content>
-    DASHBOARD
+  	<h1>ID: {{currentUser.ID}}</h1>
+  	<div ng-hide="onParking">
+	  	<label class="item item-input">
+		    <input type="text" placeholder="Ingresar placa" ng-model="placa">
+		</label>
 
-    <h1>{{currentUser.displayName}}</h1>
-    <p>{{currentUser.email}}</p>
+	  	<button class="button button-positive" ng-click="enterParkinglot(placa)" >
+	  		Acceder
+	  	</button>  		
+  	</div>
 
+  	<div ng-show="onParking">
+  		<h2>Hora entrada: {{inHour}}</h2>
+  		<button class="button button-positive" ng-click="leaveParkinglot()" >
+	  		Salir
+	  	</button>  		
+
+  	</div>
+  	
   </ion-content>
+  	}
 </ion-view>

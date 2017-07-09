@@ -1,9 +1,21 @@
 <ion-view view-title="Dashboard">
   <ion-content>
-    DASHBOARD
-
     <h1>{{currentUser.displayName}}</h1>
     <p>{{currentUser.email}}</p>
+
+    <button class="button button-positive" ng-click="goParking()">
+  		Parqueo
+  	</button>
+
+  	<button class="button button-positive" ng-click="goQuery()">
+    		Consultas
+  	</button>
+
+  	<button class="button button-positive" ng-click="goTickets()">
+    		Fichas
+  	</button>
+	
+
 
   </ion-content>
 </ion-view>

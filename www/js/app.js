@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform,$ionicLoading,$rootScope,$state,$ionicModal,$ionicPopup) {
+.run(function($ionicPlatform,$ionicLoading,$rootScope,$state,$ionicModal,$ionicPopup,$ionicHistory) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,11 +21,9 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     }
   });
 
+
   var StartFirebase = function (){  
     $ionicLoading.show();
-
-    //Configura la aplicación con firebase   
-    
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyBpComDs6HSo3NSfEyUmQbkG7QT7aggjQg",
@@ -44,8 +42,11 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     /**************************** REFERENSES TO THE DATABASE IN FIREBASE***************************/
     $rootScope.databaseRef = firebase.database().ref();    
     $rootScope.usersRef = firebase.database().ref('/users');     
-    $rootScope.parkinglotsRef = firebase.database().ref('/parkinglots'); 
+    
     $rootScope.parkingBillRef = firebase.database().ref('/parkingBill'); 
+
+    $rootScope.inGateRef = firebase.database().ref('/inGate'); 
+    $rootScope.outGateRef = firebase.database().ref('/outGate'); 
 
     $rootScope.fichasRef = firebase.database().ref('/convoFichas'); 
     $rootScope.fichasRef = firebase.database().ref('/listaSocios  '); 
@@ -90,9 +91,41 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
       
       firebase.auth().onAuthStateChanged(function(user) {                
         if (user) {// User is signed in.        
-          $rootScope.currentUser= firebase.auth().currentUser;                           
+          $rootScope.currentUser = firebase.auth().currentUser;                           
           console.log("UID:",firebase.auth().currentUser.uid);
-          $state.go('app.dashboard');          
+
+          $rootScope.usersRef.child(user.uid).on("value",function(snapshot) {  // LIST OF ALL PRODUCTS OF THE COMPANY
+            var snap = snapshot.val();              
+            $rootScope.currentUser.ID=snap.ID;
+            $rootScope.currentUser.phone=snap.phone;
+            $rootScope.currentUser.role=snap.role;
+            $ionicHistory.nextViewOptions({disableAnimate: true,disableBack: true});
+            $state.go('app.dashboard');                 
+          });              
+
+          $rootScope.userCurrentParkingRef = firebase.database().ref('/currentParking/'+user.uid); 
+          $rootScope.userCurrentParkingRef.on("value",function(snapshot) {  // LIST OF ALL PRODUCTS OF THE COMPANY
+            var snap = snapshot.val();              
+            
+            if (snap==null){
+              $rootScope.userCurrentParkingRef.set({
+                "placa":" ",
+                "in":0,
+                "out":0
+              });
+              $rootScope.onParking=false;
+            }else{
+              //console.log(snap);
+              if (snap.in==0) {
+                $rootScope.onParking=false;
+              }else{                
+                $rootScope.onParking=true;
+                var date = new Date(snap.in);                
+                $rootScope.inHour= date.getHours().toString().concat(":".concat(date.getMinutes().toString()));
+              } //Asigna el scope para parkinlots.html
+            }
+
+          });              
                    
           $rootScope.myConnectionsRef = firebase.database().ref('/ConnectedUsers/'+$rootScope.currentUser.uid+'/connections');
           $rootScope.lastOnlineRef = firebase.database().ref('/ConnectedUsers/'+$rootScope.currentUser.uid+'/connections');// stores the timestamp of my last disconnect (the last time I was seen online)
@@ -193,6 +226,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     views: {
       'menuContent': {
         templateUrl: 'templates/parkinglots.html',
+        controller: 'AppCtrl'
+      }
+    }
+  })
+
+  .state('app.query', {
+    url: '/query',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/query.html',
         controller: 'AppCtrl'
       }
     }
