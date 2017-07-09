@@ -68,7 +68,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     $rootScope.imgUsersRef = firebase.storage().ref('/users');
     $rootScope.imgProductsRef = firebase.storage().ref('/products');
 
-      $rootScope.setGauge =function (maxLevel,minLevel,value,color){   
+      /*$rootScope.setGauge =function (maxLevel,minLevel,value,color){   
         var opts = {
           lines: 12, // The number of lines to draw
           angle: 0.3, // The span of the gauge arc
@@ -93,7 +93,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
         gauge.animationSpeed = 32; // set animation speed (32 is default value)
         gauge.set(value); // set actual value
       };
-
+*/
     
 
     // Maneja la situacion cuando se desconecta la base de datos  
@@ -198,7 +198,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
       
        
 
-      $rootScope.setGauge(500,0,480,"#53fa3b");
+      //$rootScope.setGauge(500,0,480,"#53fa3b");
       
       
     });

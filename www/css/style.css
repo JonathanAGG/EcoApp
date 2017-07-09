@@ -6,16 +6,16 @@
 /*font-family: 'Champagne', sans-serif;*/
 }
 
-#header-menu{
+.header-app{
     width: 100%;
     height: auto;
     display: inline-block;
     margin-top: 4%;
 }
-#logo{
+.logo{
     margin-left: 5%;
-    width: 20%;
-    height: 80px;
+    width: 60px;
+    height: 70px;
 }
 .content-title{
     width: 73%;
@@ -45,11 +45,6 @@
     
     margin-bottom: 10%;
 }
-
-
-
-
-
 
 .map{
   z-index: 20;
@@ -122,5 +117,51 @@
 
 .canvas{
   margin-top: 25px !important;
+}
 
+.btn-ecoapp{
+    background-color: #BBB9B9;
+}
+
+#card-parking, #card-query, #card-tickets {
+    width: 43%;
+    text-align: center;
+    padding-top: 15%;
+    border-radius: 3px; 
+}
+
+#menu-botton-options{
+    display: inline;
+}
+
+#card-tickets {
+    float: right;  
+}
+#card-query {
+    float: left;
+}
+
+.card, .card .item{
+    background-color: #D2D5D1;
+}
+
+.card{
+    margin: 9px 10px !important;
+}
+
+#content-dash{
+    margin: 10% 2%;
+}
+
+
+#content-parking-init{
+    margin: 15% 5%;
+}
+
+#content-parking-finish{
+    text-align: center;
+}
+
+#card-init-time{
+    top: 100%;
 }

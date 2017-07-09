@@ -1,29 +1,81 @@
 <ion-view view-title="Parqueo">
   <ion-content>
-  	<h1>ID: {{currentUser.ID}}</h1>
-    <h2>Disponibles: {{parkingAvaible}}</h2>
-  	<div ng-hide="currenParking.isIn">
-	  	<label class="item item-input">
-		    <input type="text" placeholder="Ingresar placa" ng-model="placa">
-		</label>
 
-	  	<button class="button button-balanced" ng-click="enterParkinglot(placa)" >
-	  		Ingresar
-	  	</button>  		
-      <button class="button button-balanced" ng-click="enterParkinglot(placa)" >
-        Reservar
-      </button> 
-  	</div>
 
-  	<div ng-show="currenParking.isIn">
-  		<h2>Hora entrada: {{currenParking.inHourString}}</h2>
+    <div ng-hide="currenParking.isIn">
+
+      <div class="divnivel">
+        <div class="backgroundcanvas">
+          <div>{{parkingAvaible}}
+            <br>Parqueos
+            <br>Libres
+          </div>
+        </div>
+
+        <a class="meteradentrocanvas" nav-transition="ios" ng-click="goParking()">
+          <canvas class="canvas" id="gauge"></canvas>
+        </a>
+      </div>
+
+      <section id="content-parking-init">
+        <label class="item item-input item-floating-label" id="input-placa">
+            <span class="input-label">Ingresar placa</span>
+          <input type="text" ng-model="placa" placeholder="Ingresar placa">
+        </label>
+
+
+        <button class="btn-parking button button-full btn-ecoapp " ng-click="enterParkinglot(placa)">
+            Ingresar</button>
+
+        <button class="btn-parking button button-full btn-ecoapp " ng-click="enterParkinglot(placa)">
+        Reservar</button>
+
+      </section>
+
+
+    </div>
+
+    <div ng-show="currenParking.isIn">
+      
+       <header class="header-app">
+      <img src="../img/logo.png" alt="" class="logo">
+      <div class="content-title">
+      </div>
+    </header>
+
+      <section id="content-parking-finish">
+        <h2>Hora entrada: {{currenParking.inHourString}}</h2>
       <h2>Tiempo transcurrido: {{hours}}:{{mins}}:{{secs}}</h2>
-  		<button class="button button-balanced" ng-click="leaveParkinglot()" >
+      <button class="button button-balanced" ng-click="leaveParkinglot()">
 	  		Salir
-	  	</button>  		      
+	  	</button>
 
-  	</div>
-  	
+      <div class="card" id="card-time">
+        <div class="item item-text-wrap">
+          <div class="list">
+            
+            {{currenParking.inHourString}}12:30
+            <h2>Hora de Ingreso</h2>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card" id="card-init-time">
+        <div class="item item-text-wrap">
+          <div class="list">
+            
+            {{currenParking.inHourString}}12:30
+            <h2>Hora de Ingreso</h2>
+          </div>
+        </div>
+      </div>
+
+      </section>
+      
+
+      
+    </div>
+
   </ion-content>
-  	}
+  }
 </ion-view>

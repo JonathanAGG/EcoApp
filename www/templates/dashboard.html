@@ -1,43 +1,44 @@
-<ion-view view-title="ParkingPredio App" class="body">
+<ion-view view-title={{currentUser.displayName}} class="body">
 
   <ion-content>
-    
+    <header class="header-app">
+      <img src="../img/logo.png" alt="" class="logo">
+      <div class="content-title">
+        <p class="title">EcoParques</p>
+      </div>
+    </header>
 
-    <div class="divnivel">          
-      <div class="backgroundcanvas">
-          <div>{{parkingAvaible}}
-            <br>Parqueos
-            <br>Libres
-        </div>
-      </div>  
+    <section id="content-dash">
+        <div class="card" id="card-parking" ng-click="goParking()">
+              <div class="item item-text-wrap">
+                <div class="list">
+                  <a class="item">Parqueo</a>
+                </div>
+              </div>
+            </div>
 
-      <a class="meteradentrocanvas" nav-transition="ios" ng-click="goParking()">
-        <canvas class="canvas" id="gauge" ></canvas>              
-      </a>          
-    </div>  
+                <div class="card" id="card-query" ng-click="goQuery()">
+                      <div class="item item-text-wrap">
+                        <div class="list">
+                          <a class="item">Consulta</a>
+                        </div>
+                      </div>
+                    </div>
 
-    <h1>{{currentUser.displayName}}</h1>
-    <p>{{currentUser.email}}</p>
+                    <div class="card" id="card-tickets" ng-click="goTickets()">
+                      <div class="item item-text-wrap">
+                        <div class="list">
+                          <a class="item">Fichas</a>
+                        </div>
+                      </div>
+                    </div>
 
+    </section>
 
+   
 
-    
-
-    <button class="button button-balanced" ng-click="goParking()">
-  		Parqueo
-  	</button>
-
-  	<button class="button button-balanced" ng-click="goQuery()">
-    		Consultas
-  	</button>
-
-  	<button class="button button-balanced" ng-click="goTickets()">
-    		Fichas
-  	</button>
-	 
    
 
 
   </ion-content>
 </ion-view>
-
