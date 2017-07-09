@@ -12,7 +12,44 @@ angular.module('starter.controllers', [])
   // Form data for the login modal
   if ($state.current.name=="app.parkinglots") {
     //console.log('app.parkinglots');
-  }
+  } 
+
+  $rootScope.setGauge =function (maxLevel,minLevel,value,color){  
+    console.log(maxLevel,minLevel,value) ;
+    console.log(typeof minLevel);
+    var opts = {
+      lines: 12, // The number of lines to draw
+      angle: 0.3, // The span of the gauge arc
+      lineWidth: 0.1, // The line thickness
+      pointer: {
+        length: 0.9, // The radius of the inner circle
+        strokeWidth: 0.5, // The thickness
+        color: '#000000' // Fill color
+      },
+      limitMax: false,     // If true, the pointer will not go past the end of the gauge
+      colorStart: "#30b253",   // Colors
+      colorStop: color,    // just experiment with them
+      strokeColor: '#FFFFFF',  // to see which ones work best for you
+      //generateGradient: true,
+      highDpiSupport: true     // High resolution support
+    };
+    //var target = document.getElementById('gauge'); // your canvas elemen
+    //$rootScope.target = document.getElementsByClassName("canvasID");
+    var target = $rootScope.target;
+    console.log(target);
+    var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
+    if (minLevel!=null){gauge.setMinValue(0);}else{gauge.setMinValue(0);};
+    
+    gauge.maxValue = maxLevel; // set max gauge value
+    gauge.animationSpeed = 32; // set animation speed (32 is default value)
+    gauge.set(value); // set actual value
+  };
+
+  $rootScope.parkingInit = function (){
+    $rootScope.target = document.getElementById('gauge'); // your canvas elemen
+    $rootScope.setGauge($rootScope.maxCapacity,0,$rootScope.parkingAvaible,"#32ab20");
+
+  };
 
   $scope.enterParkinglot = function (placa){    
     if (placa==""||placa==" "|| placa==null) {
@@ -112,32 +149,7 @@ angular.module('starter.controllers', [])
   };
 
 
-  $rootScope.setGauge =function (maxLevel,minLevel,value,color){  
-    console.log(maxLevel,minLevel,value) ;
-    var opts = {
-      lines: 12, // The number of lines to draw
-      angle: 0.3, // The span of the gauge arc
-      lineWidth: 0.1, // The line thickness
-      pointer: {
-        length: 0.9, // The radius of the inner circle
-        strokeWidth: 0.5, // The thickness
-        color: '#000000' // Fill color
-      },
-      limitMax: false,     // If true, the pointer will not go past the end of the gauge
-      colorStart: "#30b253",   // Colors
-      colorStop: color,    // just experiment with them
-      strokeColor: '#FFFFFF',  // to see which ones work best for you
-      //generateGradient: true,
-      highDpiSupport: true     // High resolution support
-    };
-    var target = document.getElementById('gauge'); // your canvas element
-    var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
-    if (minLevel!=null){gauge.setMinValue(0);}else{gauge.setMinValue(0);};
-    
-    gauge.maxValue = maxLevel; // set max gauge value
-    gauge.animationSpeed = 32; // set animation speed (32 is default value)
-    gauge.set(value); // set actual value
-  };
+
 
   $rootScope.goParkingHistory = function(){
     $state.go('app.parkinghistory');

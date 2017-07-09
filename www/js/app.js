@@ -22,6 +22,8 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
   });
 
 
+
+
   if($rootScope.currenParking==null){ $rootScope.currenParking={};}
 
   var StartFirebase = function (){  
@@ -48,7 +50,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     $rootScope.inGateRef = firebase.database().ref('/inGate'); 
     $rootScope.outGateRef = firebase.database().ref('/outGate'); 
     $rootScope.currentParkingRef = firebase.database().ref('/currentParking'); 
-    $rootScope.maxCapacityRef = firebase.database().ref('/maxCapacity'); 
+    //$rootScope.maxCapacityRef = firebase.database().ref('/maxCapacity'); 
 
     $rootScope.usersRef = firebase.database().ref('/users'); 
     
@@ -189,10 +191,10 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     finally{
       $ionicLoading.hide(); 
     }
-
-    $rootScope.maxCapacityRef.on("value",function(snapshot){
-      $rootScope.maxCapacity = snapshot.val();      
-    });
+    $rootScope.maxCapacity = 300;
+    // $rootScope.maxCapacityRef.on("value",function(snapshot){
+    //   $rootScope.maxCapacity = snapshot.val();      
+    // });
 
     $rootScope.currentParkingRef.on("value",function(snapshot) {  // Cuenta la cantidad de 
       var snap = snapshot.val();

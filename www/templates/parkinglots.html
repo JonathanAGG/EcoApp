@@ -1,4 +1,4 @@
-<ion-view view-title="Parqueo" class="body"  class="body">
+<ion-view view-title="Parqueo" class="body"  class="body" ng-init="parkingInit()">
   <ion-content>
 
 
@@ -13,7 +13,7 @@
         </div>
 
         <a class="meteradentrocanvas" nav-transition="ios" ng-click="goParking()">
-          <canvas class="canvas" id="gauge"></canvas>
+          <canvas class="canvas canvasID" id="gauge"></canvas>
         </a>
       </div>
 
