@@ -23,6 +23,7 @@ angular.module('starter.controllers', [])
               if (result.text=="entrada") {     //Setea la hora de inicio y placa & abre la puerta de entrada
                   var dateIn = new Date().valueOf();
                   $scope.startCounter();
+                  $rootScope.currenParking.placa=placa;
                   $rootScope.userCurrentParkingRef.set({
                     "placa":placa,
                     "in":dateIn,
@@ -61,14 +62,22 @@ angular.module('starter.controllers', [])
         function (result) {
           if(!result.cancelled){
             if (result.text=="salida") {     //Setea la hora de inicio y placa & abre la puerta de salida
-                var dateOn = new Date().valueOf();
-                $rootScope.userCurrentParkingRef.child("out").set(dateOn);
+                var outHourValue = new Date().valueOf();
+                $rootScope.userCurrentParkingRef.child("out").set(outHourValue);
 
               $rootScope.outGateRef.set(true);
               $rootScope.outGateRef.on("value",function(snapshot) {  
                 var snap = snapshot.val();  
                 $timeout(function() {$rootScope.outGateRef.set(false);}, 5000); 
               });
+                            
+              $rootScope.userHistoryParkingRef.push({
+                "placa":$rootScope.currenParking.placa,
+                "in":$rootScope.currenParking.inHourValue,
+                "out":outHourValue,
+                "total":outHourValue-$rootScope.currenParking.inHourValue
+              });
+
             }else{    //Se ha leido otro codigo
               $rootScope.showAlert("Código QR inválido!!");
             }

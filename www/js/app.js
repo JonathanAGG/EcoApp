@@ -45,11 +45,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     /**************************** REFERENSES TO THE DATABASE IN FIREBASE***************************/
     $rootScope.databaseRef = firebase.database().ref();    
     $rootScope.usersRef = firebase.database().ref('/users');     
-    
-    $rootScope.parkingBillRef = firebase.database().ref('/parkingBill'); 
-
     $rootScope.inGateRef = firebase.database().ref('/inGate'); 
     $rootScope.outGateRef = firebase.database().ref('/outGate'); 
+    $rootScope.currentParkingRef = firebase.database().ref('/currentParking'); 
+    $rootScope.maxCapacityRef = firebase.database().ref('/maxCapacity'); 
+
+    
+    
+
+    $rootScope.parkingBillRef = firebase.database().ref('/parkingBill'); 
+
 
     $rootScope.fichasRef = firebase.database().ref('/convoFichas'); 
     $rootScope.fichasRef = firebase.database().ref('/listaSocios  '); 
@@ -62,6 +67,32 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     $rootScope.storageRef = firebase.storage().ref();    
     $rootScope.imgUsersRef = firebase.storage().ref('/users');
     $rootScope.imgProductsRef = firebase.storage().ref('/products');
+
+      $rootScope.setGauge =function (maxLevel,minLevel,value,color){   
+        var opts = {
+          lines: 12, // The number of lines to draw
+          angle: 0.3, // The span of the gauge arc
+          lineWidth: 0.1, // The line thickness
+          pointer: {
+            length: 0.9, // The radius of the inner circle
+            strokeWidth: 0.035, // The thickness
+            color: '#000000' // Fill color
+          },
+          limitMax: false,     // If true, the pointer will not go past the end of the gauge
+          colorStart: '#30b253',   // Colors
+          colorStop: color,    // just experiment with them
+          strokeColor: '#FFFFFF',  // to see which ones work best for you
+          generateGradient: true,
+          highDpiSupport: true     // High resolution support
+        };
+        var target = document.getElementById('gauge'); // your canvas element
+        var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
+        if (minLevel!=null){gauge.setMinValue(0);}else{gauge.setMinValue(0);};
+        
+        gauge.maxValue = maxLevel; // set max gauge value
+        gauge.animationSpeed = 32; // set animation speed (32 is default value)
+        gauge.set(value); // set actual value
+      };
 
     
 
@@ -105,7 +136,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
             $ionicHistory.nextViewOptions({disableAnimate: true,disableBack: true});
             $state.go('app.dashboard');                 
           });              
-
+          $rootScope.userHistoryParkingRef = firebase.database().ref('/historyParking').child(user.uid);
           $rootScope.userCurrentParkingRef = firebase.database().ref('/currentParking/'+user.uid); 
           $rootScope.userCurrentParkingRef.on("value",function(snapshot) {  // LIST OF ALL PRODUCTS OF THE COMPANY
             var snap = snapshot.val();              
@@ -145,6 +176,32 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     finally{
       $ionicLoading.hide(); 
     }
+
+    $rootScope.maxCapacityRef.on("value",function(snapshot){
+      $rootScope.maxCapacity = snapshot.val();      
+    });
+
+    $rootScope.currentParkingRef.on("value",function(snapshot) {  // Cuenta la cantidad de 
+      var snap = snapshot.val();
+      var onUse=0;
+      if(snap!=null){$rootScope.currentParkings = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentParkings=[];}$rootScope.$digest();           
+
+      for (var i = $rootScope.currentParkings.length - 1; i >= 0; i--) {
+        if ($rootScope.currentParkings[i].in!=0) {onUse++;}
+      }
+      $rootScope.parkingAvaible = $rootScope.maxCapacity - onUse;
+
+      console.log($state.current.name);
+      if ($state.current.name!="app.dashboard") {
+        $state.go('app.dashboard');
+      }
+      
+       
+
+      $rootScope.setGauge(500,0,480,"#53fa3b");
+      
+      
+    });
       
     
 
