@@ -68,6 +68,32 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     $rootScope.imgUsersRef = firebase.storage().ref('/users');
     $rootScope.imgProductsRef = firebase.storage().ref('/products');
 
+      $rootScope.setGauge =function (maxLevel,minLevel,value,color){   
+        var opts = {
+          lines: 12, // The number of lines to draw
+          angle: 0.3, // The span of the gauge arc
+          lineWidth: 0.1, // The line thickness
+          pointer: {
+            length: 0.9, // The radius of the inner circle
+            strokeWidth: 0.035, // The thickness
+            color: '#000000' // Fill color
+          },
+          limitMax: false,     // If true, the pointer will not go past the end of the gauge
+          colorStart: '#30b253',   // Colors
+          colorStop: color,    // just experiment with them
+          strokeColor: '#FFFFFF',  // to see which ones work best for you
+          generateGradient: true,
+          highDpiSupport: true     // High resolution support
+        };
+        var target = document.getElementById('gauge'); // your canvas element
+        var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
+        if (minLevel!=null){gauge.setMinValue(0);}else{gauge.setMinValue(0);};
+        
+        gauge.maxValue = maxLevel; // set max gauge value
+        gauge.animationSpeed = 32; // set animation speed (32 is default value)
+        gauge.set(value); // set actual value
+      };
+
     
 
     // Maneja la situacion cuando se desconecta la base de datos  
@@ -158,7 +184,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     $rootScope.currentParkingRef.on("value",function(snapshot) {  // Cuenta la cantidad de 
       var snap = snapshot.val();
       var onUse=0;
-      if(snap!=null){$rootScope.currentParkings = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentProductos=[];}$state.reload();           
+      if(snap!=null){$rootScope.currentParkings = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentParkings=[];}$rootScope.$digest();           
 
       for (var i = $rootScope.currentParkings.length - 1; i >= 0; i--) {
         if ($rootScope.currentParkings[i].in!=0) {onUse++;}
@@ -170,33 +196,9 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
         $state.go('app.dashboard');
       }
       
-       function setGauge (maxLevel,minLevel,value,color){   
-        var opts = {
-          lines: 12, // The number of lines to draw
-          angle: 0.3, // The span of the gauge arc
-          lineWidth: 0.1, // The line thickness
-          pointer: {
-            length: 0.9, // The radius of the inner circle
-            strokeWidth: 0.035, // The thickness
-            color: '#000000' // Fill color
-          },
-          limitMax: false,     // If true, the pointer will not go past the end of the gauge
-          colorStart: '#30b253',   // Colors
-          colorStop: color,    // just experiment with them
-          strokeColor: '#FFFFFF',  // to see which ones work best for you
-          generateGradient: true,
-          highDpiSupport: true     // High resolution support
-        };
-        var target = document.getElementById('gauge'); // your canvas element
-        var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
-        if (minLevel!=null){gauge.setMinValue(0);}else{gauge.setMinValue(0);};
-        
-        gauge.maxValue = maxLevel; // set max gauge value
-        gauge.animationSpeed = 32; // set animation speed (32 is default value)
-        gauge.set(value); // set actual value
-      };
+       
 
-      setGauge($rootScope.maxCapacity,0,$rootScope.parkingAvaible,"#53fa3b");
+      $rootScope.setGauge(500,0,480,"#53fa3b");
       
       
     });
