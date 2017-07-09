@@ -1,20 +1,24 @@
 <ion-view view-title="Parqueo">
   <ion-content>
   	<h1>ID: {{currentUser.ID}}</h1>
+    <h2>Disponibles: {{parkingAvaible}}</h2>
   	<div ng-hide="currenParking.isIn">
 	  	<label class="item item-input">
 		    <input type="text" placeholder="Ingresar placa" ng-model="placa">
 		</label>
 
-	  	<button class="button button-positive" ng-click="enterParkinglot(placa)" >
-	  		Acceder
+	  	<button class="button button-balanced" ng-click="enterParkinglot(placa)" >
+	  		Ingresar
 	  	</button>  		
+      <button class="button button-balanced" ng-click="enterParkinglot(placa)" >
+        Reservar
+      </button> 
   	</div>
 
   	<div ng-show="currenParking.isIn">
   		<h2>Hora entrada: {{currenParking.inHourString}}</h2>
       <h2>Tiempo transcurrido: {{hours}}:{{mins}}:{{secs}}</h2>
-  		<button class="button button-positive" ng-click="leaveParkinglot()" >
+  		<button class="button button-balanced" ng-click="leaveParkinglot()" >
 	  		Salir
 	  	</button>  		      
 

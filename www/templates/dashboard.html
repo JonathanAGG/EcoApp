@@ -1,27 +1,43 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="ParkingPredio App">
 
   <ion-content>
+    
+
+    <div class="divnivel">          
+      <div class="backgroundcanvas">
+          <div>{{parkingAvaible}}
+            <br>Parqueos
+            <br>Libres
+        </div>
+      </div>  
+
+      <a class="meteradentrocanvas" nav-transition="ios" ng-click="goParking()">
+        <canvas class="canvas" id="gauge" ></canvas>              
+      </a>          
+    </div>  
+
     <h1>{{currentUser.displayName}}</h1>
     <p>{{currentUser.email}}</p>
 
+
+
     
 
-    <button class="button button-positive" ng-click="goParking()">
+    <button class="button button-balanced" ng-click="goParking()">
   		Parqueo
   	</button>
 
-  	<button class="button button-positive" ng-click="goQuery()">
+  	<button class="button button-balanced" ng-click="goQuery()">
     		Consultas
   	</button>
 
-  	<button class="button button-positive" ng-click="goTickets()">
+  	<button class="button button-balanced" ng-click="goTickets()">
     		Fichas
   	</button>
 	 
-   <map class="map" on-create="mapCreated(map)" id="map" ></map> 
+   
 
 
   </ion-content>
 </ion-view>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaTrReBVPf5B4h-hgdUbXGMYhOciR7cUg&signed_in=true"></script>
