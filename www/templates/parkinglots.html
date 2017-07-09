@@ -1,4 +1,4 @@
-<ion-view view-title="Parqueo">
+<ion-view view-title="Parqueo" class="body"  class="body">
   <ion-content>
 
 
@@ -24,51 +24,57 @@
         </label>
 
 
+        <!--
+        <button class="btn-parking button button-full btn-ecoapp " ng-click="enterParkinglot(placa)">
+        Reservar</button>-->
+
         <button class="btn-parking button button-full btn-ecoapp " ng-click="enterParkinglot(placa)">
             Ingresar</button>
-
-        <button class="btn-parking button button-full btn-ecoapp " ng-click="enterParkinglot(placa)">
-        Reservar</button>
-
       </section>
 
 
     </div>
 
+
+
     <div ng-show="currenParking.isIn">
       
-       <header class="header-app">
-      <img src="../img/logo.png" alt="" class="logo">
-      <div class="content-title">
-      </div>
-    </header>
+       
 
       <section id="content-parking-finish">
-        <h2>Hora entrada: {{currenParking.inHourString}}</h2>
-      <h2>Tiempo transcurrido: {{hours}}:{{mins}}:{{secs}}</h2>
-      <button class="button button-balanced" ng-click="leaveParkinglot()">
-	  		Salir
-	  	</button>
+        <div class="card">
+            <div class="item item-text-wrap">
+              <div class="list">
+                <a class="item item-icon-right">                  
+                  <h2>Hora entrada</h2>
+                  <h1>{{currenParking.inHourString}}</h1>
+                  
+                </a>
+              </div>
+            </div>
+        </div>
 
-      <div class="card" id="card-time">
-        <div class="item item-text-wrap">
-          <div class="list">
-            
-            {{currenParking.inHourString}}12:30
-            <h2>Hora de Ingreso</h2>
-          </div>
+        <div class="card">
+            <div class="item item-text-wrap">
+              <div class="list">
+                <a class="item item-icon-right">                  
+                  <h2>Tiempo Transcurrido</h2>
+                  <h1>{{hoursH}}:{{minsH}}:{{secsH}}</h1>
+                  
+                </a>
+              </div>
+            </div>
         </div>
-      </div>
       
-      <div class="card" id="card-init-time">
-        <div class="item item-text-wrap">
-          <div class="list">
-            
-            {{currenParking.inHourString}}12:30
-            <h2>Hora de Ingreso</h2>
-          </div>
-        </div>
-      </div>
+      
+
+      <button class="btn-parking button button-full btn-salir " ng-click="leaveParkinglot()">
+            Salir</button>
+      
+
+      
+      
+      
 
       </section>
       

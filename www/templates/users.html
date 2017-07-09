@@ -1,9 +1,30 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Usuarios" class="body">
   <ion-content>
-    DASHBOARD
+  	<div class="list">
+	  	
 
-    <h1>{{currentUser.displayName}}</h1>
-    <p>{{currentUser.email}}</p>
+	  	<div class="card" ng-repeat="user in currentUsers">
+		  	<div class="item item-text-wrap">
+		  		<div class="list">		  			
+		  			<a class="item item-icon-right">
+				    	{{user.name}} {{user.lastname}}
+		  				<i class="icon ion-edit"></i>
+				  	</a>
+
+				  	<a class="item item-icon-right">
+				    	Tel: {{user.phone}}
+				  	</a>				  	
+				  	<a class="item item-icon-right">
+				  		{{user.email}}
+				  	</a>
+		  		</div>
+		  	</div>
+		</div>
+
+	</div>
+    
 
   </ion-content>
 </ion-view>
+
+

@@ -1,37 +1,55 @@
-<ion-view view-title={{currentUser.displayName}} class="body">
+<ion-view view-title="Securitate App" class="body" >
 
   <ion-content>
+    <!--
     <header class="header-app">
-      <img src="../img/logo.png" alt="" class="logo">
-      <div class="content-title">
+      <img ng-src="img/logo.png" alt="" class="logo dash">
+       <div class="content-title">
         <p class="title">EcoParques</p>
-      </div>
-    </header>
+      </div> 
+      
+      
+    </header>-->
+
 
     <section id="content-dash">
-        <div class="card" id="card-parking" ng-click="goParking()">
-              <div class="item item-text-wrap">
-                <div class="list">
-                  <a class="item">Parqueo</a>
-                </div>
-              </div>
+      
+
+        <div class="card dash" id="card-parking" ng-click="goParking()">
+          <div class="item item-text-wrap dash">
+            <div class="list">
+              <img ng-src="img/CAMION.svg" alt="" class="logo dash">
+              <a class="item dashText">Parqueo</a>
             </div>
+          </div>
+        </div>
 
-                <div class="card" id="card-query" ng-click="goQuery()">
-                      <div class="item item-text-wrap">
-                        <div class="list">
-                          <a class="item">Consulta</a>
-                        </div>
-                      </div>
-                    </div>
+        <div class="card dash" id="card-query" ng-click="goQuery()">
+          <div class="item item-text-wrap dash">
+            <div class="list">
+              <img ng-src="img/MIS_DATOS.svg" alt="" class="logo dash">
+              <a class="item dashText">Mis datos</a>
+            </div>
+          </div>
+        </div>
 
-                    <div class="card" id="card-tickets" ng-click="goTickets()">
-                      <div class="item item-text-wrap">
-                        <div class="list">
-                          <a class="item">Fichas</a>
-                        </div>
-                      </div>
-                    </div>
+        <div class="card dash" id="card-tickets" ng-click="goBoats()">
+          <div class="item item-text-wrap dash">
+            <div class="list">
+              <img ng-src="img/FICHAS.svg" alt="" class="logo dash">
+              <a class="item dashText">Fichas</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card dash" id="card-usuarios" ng-click="goUsers()">
+          <div class="item item-text-wrap dash">
+            <div class="list">
+              <img ng-src="img/USUARIOS.svg" alt="" class="logo dash">
+              <a class="item dashText">Administrar Usuarios</a>
+            </div>
+          </div>
+        </div>
 
     </section>
 

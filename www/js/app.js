@@ -50,14 +50,15 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     $rootScope.currentParkingRef = firebase.database().ref('/currentParking'); 
     $rootScope.maxCapacityRef = firebase.database().ref('/maxCapacity'); 
 
+    $rootScope.usersRef = firebase.database().ref('/users'); 
     
     
 
-    $rootScope.parkingBillRef = firebase.database().ref('/parkingBill'); 
+    
 
 
-    $rootScope.fichasRef = firebase.database().ref('/convoFichas'); 
-    $rootScope.fichasRef = firebase.database().ref('/listaSocios  '); 
+    
+    
    
     
     //$rootScope.canjesRef = firebase.database().ref('/canjees'); //premios Firebase Reference
@@ -67,6 +68,12 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     $rootScope.storageRef = firebase.storage().ref();    
     $rootScope.imgUsersRef = firebase.storage().ref('/users');
     $rootScope.imgProductsRef = firebase.storage().ref('/products');
+
+    $rootScope.pad = function(num, size){
+      var s = num+"";
+      while (s.length < size) s = "0" + s;
+      return s;
+    };
 
       /*$rootScope.setGauge =function (maxLevel,minLevel,value,color){   
         var opts = {
@@ -155,12 +162,18 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
               }else{                
                 $rootScope.currenParking.isIn=true;
                 var date = new Date(snap.in);    
-                $rootScope.currenParking.inHourValue = date;
-                $rootScope.currenParking.inHourString = date.getHours().toString().concat(":".concat(date.getMinutes().toString()));
+                $rootScope.currenParking.inHourValue = date.valueOf();
+                $rootScope.currenParking.inHourString = $rootScope.pad(date.getHours(),2).concat(":".concat($rootScope.pad(date.getMinutes(),2)));
               } //Asigna el scope para parkinlots.html
             }
 
           });              
+
+          $rootScope.userHistoryParkingRef.on("value",function(snapshot) {  
+            var snap = snapshot.val();
+            if(snap!=null){$rootScope.currentHistoryParkings = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentHistoryParkings=[];}$rootScope.$digest();           
+            //console.log(snap);
+          });
                    
           $rootScope.myConnectionsRef = firebase.database().ref('/ConnectedUsers/'+$rootScope.currentUser.uid+'/connections');
           $rootScope.lastOnlineRef = firebase.database().ref('/ConnectedUsers/'+$rootScope.currentUser.uid+'/connections');// stores the timestamp of my last disconnect (the last time I was seen online)
@@ -191,17 +204,20 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
       }
       $rootScope.parkingAvaible = $rootScope.maxCapacity - onUse;
 
+      /*
       console.log($state.current.name);
       if ($state.current.name!="app.dashboard") {
         $state.go('app.dashboard');
-      }
-      
-       
-
-      //$rootScope.setGauge(500,0,480,"#53fa3b");
-      
-      
+      }*/
+      //$rootScope.setGauge($rootScope.maxCapacity,0,$rootScope.parkingAvaible,"#53fa3b");
     });
+
+    $rootScope.usersRef.on("value",function(snapshot) {  // Cuenta la cantidad de 
+      var snap = snapshot.val();
+      if(snap!=null){$rootScope.currentUsers = Object.keys(snap).map(function(k) { var aux = snap[k]; aux.key = k; return aux });}else {$rootScope.currentUsers=[];}$rootScope.$digest();           
+    });
+
+    
       
     
 
@@ -234,10 +250,10 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
 
   $rootScope.showAlert = function(mensaje) {
     var confirmPopup = $ionicPopup.confirm({
-         title: 'SkyPuntos ',
+         title: 'SECURITATE ',
          template: mensaje,
          buttons:[
-          {text:'Ok',type:'button-positive',onTap: function(e) {return true;}},          
+          {text:'Ok',type:'button-balanced',onTap: function(e) {return true;}},          
          ]
     });     
   };
@@ -312,6 +328,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
+  .state('app.boats', {
+    url: '/boats',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/boats.html',
+        controller: 'AppCtrl'
+      }
+    }
+  })
+
   .state('app.users', {
     url: '/users',
     views: {
@@ -321,6 +347,42 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
+
+  .state('app.parkinghistory', {
+    url: '/parkinghistory',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/parkinghistory.html',
+        controller: 'AppCtrl'
+      }
+    }
+  })
+
+
+  .state('app.policy', {
+    url: '/policy',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/policy.html',
+        controller: 'AppCtrl'
+      }
+    }
+  })
+
+  .state('app.delinquency', {
+    url: '/delinquency',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/delinquency.html',
+        controller: 'AppCtrl'
+      }
+    }
+  })
+
+
+  
+
+  
 
   ;
   // if none of the above states are matched, use this as the fallback

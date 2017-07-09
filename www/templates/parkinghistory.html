@@ -1,0 +1,31 @@
+<ion-view view-title="Historial Parqueo" class="body">
+  <ion-content>
+  	<div class="list">
+	  	
+
+	  	<div class="card" ng-repeat="parking in currentHistoryParkings">
+		  	<div class="item item-text-wrap">
+		  		<div class="list">
+		  			<h2>
+		  				Placa: {{parking.placa}}
+		  			</h2>
+				  	<a class="item item-icon-right">
+				    	Fecha: {{getDate(parking.in)}}
+				  	</a>
+				  	
+				  	<a class="item item-icon-right">
+				  		Duración: {{getDuration(parking.total)}}				    	
+				  	</a>
+
+		  		</div>
+		  	</div>
+		</div>
+
+
+	</div>
+    
+
+  </ion-content>
+</ion-view>
+
+
