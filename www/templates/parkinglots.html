@@ -1,7 +1,7 @@
 <ion-view view-title="Parqueo">
   <ion-content>
   	<h1>ID: {{currentUser.ID}}</h1>
-  	<div ng-hide="onParking">
+  	<div ng-hide="currenParking.isIn">
 	  	<label class="item item-input">
 		    <input type="text" placeholder="Ingresar placa" ng-model="placa">
 		</label>
@@ -11,11 +11,12 @@
 	  	</button>  		
   	</div>
 
-  	<div ng-show="onParking">
-  		<h2>Hora entrada: {{inHour}}</h2>
+  	<div ng-show="currenParking.isIn">
+  		<h2>Hora entrada: {{currenParking.inHourString}}</h2>
+      <h2>Tiempo transcurrido: {{hours}}:{{mins}}:{{secs}}</h2>
   		<button class="button button-positive" ng-click="leaveParkinglot()" >
 	  		Salir
-	  	</button>  		
+	  	</button>  		      
 
   	</div>
   	
