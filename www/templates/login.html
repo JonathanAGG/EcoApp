@@ -1,39 +1,43 @@
-<ion-view view-title="Login" ng-init="help=false">
-  <ion-header-bar>
-    <h1 class="title">Autenticación de Socio</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="doLogin(loginData)">
-      <div class="list">
-        
-        <label class="item item-input" ng-hide="help">
-          <span class="input-label">Correo Electrónico</span>
-          <input type="email" ng-model="loginData.email">
-        </label>        
-        <label class="item item-input" ng-show="help">
-          <span class="input-label">Número de Cédula</span>
-          <input type="number" ng-model="loginData.ID">
-        </label>        
-        <label class="item item-input">
-          <span class="input-label">Contraseña</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <a ng-click="help=!help">No se acuerda de su correo electrónico?</a>
-          
-        <label class="item">
-          <input class="button button-block button-positive" type="submit" value="Entrar">           
-        </label>                     
+<ion-view view-title="Login" ng-init="help=false" class="body">
+  <div>
+    <header id="header-menu">
+      <img src="../img/logo.png" alt="" id="logo">
+      <div class="content-title">
+        <p class="title">Autenticación de Socio</p>
       </div>
-    </form>
-    <label class="item">
-      <button class="button button-block button-positive" ng-click="signupModal.show()">           
-      Registrarse
-      </button>
-    </label>
-  </ion-content>
+    </header>
+    <section class="content-form">
+      <form ng-submit="doLogin(loginData)">
+        <div class="list">
+
+          <label class="item item-input item-floating-label" ng-hide="help">
+            <span class="input-label">Correo Electrónico</span>
+          <input type="email" ng-model="loginData.email" placeholder="Correo Electrónico">
+        </label>
+          <label class="item item-input item-floating-label" ng-show="help">
+          <span class="input-label">Número de Cédula</span>
+          <input type="number" ng-model="loginData.ID" placeholder="Número de Cédula">
+        </label>
+          <label class="item item-input item-floating-label" id="password">
+          <span class="input-label">Contraseña</span>
+          <input type="password" ng-model="loginData.password" placeholder="Contraseña">
+        </label>
+          <a ng-click="help=!help">No se acuerda de su correo electrónico?</a>
+          <button class="button button button-full  button-light" type="submit">
+            Entrar
+          </button>
+          <!--          <label class="item">
+          <input class="button button button-full  button-light" type="submit" value="Entrar">           
+        </label>-->
+        </div>
+      </form>
+
+      <button class="button button button-full  button-light" ng-click="signupModal.show()">
+  Registrarse
+</button>
+
+    </section>
+  </div>
 </ion-view>
 
 
