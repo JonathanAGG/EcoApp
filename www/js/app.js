@@ -22,6 +22,8 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
   });
 
 
+  if($rootScope.currenParking==null){ $rootScope.currenParking={};}
+
   var StartFirebase = function (){  
     $ionicLoading.show();
     // Initialize Firebase
@@ -36,6 +38,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
     };
     firebase.initializeApp(config);
     $rootScope.host=config.authDomain;
+
     
 
     
@@ -113,15 +116,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers'])
                 "in":0,
                 "out":0
               });
-              $rootScope.onParking=false;
+              $rootScope.currenParking.isIn=false;
             }else{
               //console.log(snap);
               if (snap.in==0) {
-                $rootScope.onParking=false;
+                $rootScope.currenParking.isIn=false;
               }else{                
-                $rootScope.onParking=true;
-                var date = new Date(snap.in);                
-                $rootScope.inHour= date.getHours().toString().concat(":".concat(date.getMinutes().toString()));
+                $rootScope.currenParking.isIn=true;
+                var date = new Date(snap.in);    
+                $rootScope.currenParking.inHourValue = date;
+                $rootScope.currenParking.inHourString = date.getHours().toString().concat(":".concat(date.getMinutes().toString()));
               } //Asigna el scope para parkinlots.html
             }
 

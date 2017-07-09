@@ -1,7 +1,10 @@
 <ion-view view-title="Dashboard">
+
   <ion-content>
     <h1>{{currentUser.displayName}}</h1>
     <p>{{currentUser.email}}</p>
+
+    
 
     <button class="button button-positive" ng-click="goParking()">
   		Parqueo
@@ -14,8 +17,11 @@
   	<button class="button button-positive" ng-click="goTickets()">
     		Fichas
   	</button>
-	
+	 
+   <map class="map" on-create="mapCreated(map)" id="map" ></map> 
 
 
   </ion-content>
 </ion-view>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaTrReBVPf5B4h-hgdUbXGMYhOciR7cUg&signed_in=true"></script>
